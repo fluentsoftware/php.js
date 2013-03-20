@@ -306,7 +306,12 @@ PHP.VM = function( src, opts ) {
 
 
                 var exec = new Function( "$$", "$", "ENV", "$Static", src  );
-                exec.call(this, $$, $, ENV, staticHandler);
+                var res = exec.call(this, $$, $, ENV, staticHandler);
+                
+                if (typeof(res) != 'undefined') {
+                    this.RETURN_VALUE = res.val;
+                }
+
                 if (shutdown === false ){
                     shutdown = true;
                     this.$obflush.call( ENV );
